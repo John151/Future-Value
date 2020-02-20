@@ -18,8 +18,7 @@ namespace Future_Value
         }
 
         private void btnCalculate_Click(object sender, EventArgs e)
-        {
-            //converts user input to decimal numbers, years to intiger
+        {       //converts user input to decimal numbers, years to int
             decimal monthlyInvestment =
                 Convert.ToDecimal(txtMonthlyInvestment.Text);
             decimal yearlyInterestRate =
@@ -30,30 +29,48 @@ namespace Future_Value
             decimal monthlyInterestRate = yearlyInterestRate / 12 / 100;
             //calculates the monthly interest rate, as in this scenerio the interest is calculated
             //every month, previous month's gains also gain interest
-
-            decimal futureValue = 0m; //starting value placeholder 
-            futureValue = calculateFurureValue(monthlyInvestment, months, monthlyInterestRate, futureValue);
-
+            decimal futureValue = this.CalculateFutureValue(monthlyInvestment,
+                monthlyInterestRate, months);
+           
             txtFurureValue.Text = futureValue.ToString("c");
             txtMonthlyInvestment.Focus();
 
         }
 
-        private static decimal calculateFurureValue(decimal monthlyInvestment, int months, decimal monthlyInterestRate, decimal futureValue)
-        {
+        private decimal CalculateFutureValue(decimal monthlyInvestment,
+            decimal monthlyInterestRate, int months)
+            {
+            decimal futureValue = 0m;
             //loop that sums the value with repeating investments, accruing interest every month
             for (int i = 0; i < months; i++)
-            {
-                futureValue = (futureValue + monthlyInvestment)
+                {
+               futureValue = (futureValue + monthlyInvestment)
                     * (1 + monthlyInterestRate);
+                }
+            return futureValue;
             }
 
-            return futureValue;
-        }
-
-        private void btnExit_Click(object sender, EventArgs e)
+    private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ClearFutureValue(object sender, EventArgs e)
+        {
+            txtFurureValue.Text = "";
+        }
+
+        private void Form1_DoubleClick(object sender, EventArgs e)
+        {
+            txtMonthlyInvestment.Text = "";
+            txtInterestRate.Text = "";
+            txtYears.Text = "";
+            txtFurureValue.Text = "";
+        }
+
+        private void txtInterestRate_DoubleClick(object sender, EventArgs e)
+        {
+            txtInterestRate.Text = "12";
         }
     }
 }
