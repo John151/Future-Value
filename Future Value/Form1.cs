@@ -19,6 +19,7 @@ namespace Future_Value
 
         private void btnCalculate_Click(object sender, EventArgs e)
         {
+            //converts user input to decimal numbers, years to intiger
             decimal monthlyInvestment =
                 Convert.ToDecimal(txtMonthlyInvestment.Text);
             decimal yearlyInterestRate =
@@ -27,8 +28,10 @@ namespace Future_Value
 
             int months = years * 12;
             decimal monthlyInterestRate = yearlyInterestRate / 12 / 100;
+            //calculates the monthly interest rate, as in this scenerio the interest is calculated
+            //every month, previous month's gains also gain interest
 
-            decimal futureValue = 0m;
+            decimal futureValue = 0m; //starting value placeholder 
             futureValue = calculateFurureValue(monthlyInvestment, months, monthlyInterestRate, futureValue);
 
             txtFurureValue.Text = futureValue.ToString("c");
@@ -38,6 +41,7 @@ namespace Future_Value
 
         private static decimal calculateFurureValue(decimal monthlyInvestment, int months, decimal monthlyInterestRate, decimal futureValue)
         {
+            //loop that sums the value with repeating investments, accruing interest every month
             for (int i = 0; i < months; i++)
             {
                 futureValue = (futureValue + monthlyInvestment)
