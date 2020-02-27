@@ -22,19 +22,38 @@ namespace Future_Value
 
             if (DataCheck(txtMonthlyInvestment.Text, txtInterestRate.Text, txtYears.Text))
             {
-                if (DataTypeCheck(txtMonthlyInvestment.Text, txtInterestRate.Text,
-           txtYears.Text, out decimal monthlyInvestment, out decimal yearlyInterestRate,
-          out int years))
-                { 
-                    int months = years * 12;
-                decimal monthlyInterestRate = yearlyInterestRate / 12 / 100;
-                //calculates the monthly interest rate, as in this scenerio the interest is calculated
-                //every month, previous month's gains also gain interest
-                decimal futureValue = this.CalculateFutureValue(monthlyInvestment,
-                    monthlyInterestRate, months);
+                //checks if valid data is entered
+                try
+                {
+                    decimal monthlyInvestment =
+                        Convert.ToDecimal(txtMonthlyInvestment);
+                    decimal yearlyInterestRate =
+                        Convert.ToDecimal(txtInterestRate);
+                    int years = Convert.ToInt32(txtYears);
 
-                txtFurureValue.Text = futureValue.ToString("c");
-                txtMonthlyInvestment.Focus();
+                    int months = years * 12;
+                    decimal monthlyInterestRate = yearlyInterestRate / 12 / 100;
+                    //calculates the monthly interest rate, as in this scenerio the interest is calculated
+                    //every month, previous month's gains also gain interest
+                    decimal futureValue = this.CalculateFutureValue(monthlyInvestment,
+                        monthlyInterestRate, months);
+
+                    txtFurureValue.Text = futureValue.ToString("c");
+                    txtMonthlyInvestment.Focus();
+
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show("Please check the data entered, use only numbers", "Error");
+
+                }
+                catch (OverflowException)
+                {
+                    MessageBox.Show("An overflow exception has occured. Please use a smaller number", "Error");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, ex.GetType().ToString());
                 }
 
             }
@@ -59,31 +78,6 @@ namespace Future_Value
                 return false;
             }
             return true;
-        }
-        private bool DataTypeCheck(string txtMonthlyInvestment, string txtInterestRate,
-         string txtYears, out decimal monthlyInvestment, out decimal yearlyInterestRate, 
-         out int years)
-        {   //checks if valid data is entered
-            try
-            {
-                monthlyInvestment =
-                    Convert.ToDecimal(txtMonthlyInvestment);
-                yearlyInterestRate =
-                    Convert.ToDecimal(txtInterestRate);
-                years = Convert.ToInt32(txtYears);
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("Please check the data entered, use only numbers", "Error");
-            }
-            catch (OverflowException)
-            {
-                MessageBox.Show("An overflow exception has occured. Please use a smaller number", "Error");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.GetType().ToString());
-            }
         }
 
         private decimal CalculateFutureValue(decimal monthlyInvestment,
