@@ -23,7 +23,7 @@ namespace Future_Value
             if (DataCheck(txtMonthlyInvestment.Text, txtInterestRate.Text, txtYears.Text))
             {
                 if (DataTypeCheck(txtMonthlyInvestment.Text, txtInterestRate.Text,
-           txtYears, out decimal monthlyInvestment, out decimal yearlyInterestRate,
+           txtYears.Text, out decimal monthlyInvestment, out decimal yearlyInterestRate,
           out int years))
                 { 
                     int months = years * 12;
@@ -61,16 +61,16 @@ namespace Future_Value
             return true;
         }
         private bool DataTypeCheck(string txtMonthlyInvestment, string txtInterestRate,
-         string txtYears, out decimal monthlyInvestment, decimal yearlyInterestRate, 
-         int months)
+         string txtYears, out decimal monthlyInvestment, out decimal yearlyInterestRate, 
+         out int years)
         {   //checks if valid data is entered
             try
             {
                 monthlyInvestment =
-                    Convert.ToDecimal(txtMonthlyInvestment.Text);
+                    Convert.ToDecimal(txtMonthlyInvestment);
                 yearlyInterestRate =
-                    Convert.ToDecimal(txtInterestRate.Text);
-                years = Convert.ToInt32(txtYears.Text);
+                    Convert.ToDecimal(txtInterestRate);
+                years = Convert.ToInt32(txtYears);
             }
             catch (FormatException)
             {
